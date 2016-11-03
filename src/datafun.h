@@ -27,6 +27,7 @@ struct ldf_field {
 #define LDF_BREAKINGSTRING_LENGTH (sizeof(LDF_BREAKINGSTRING) - 1)
 
 void ldf_add_field(struct ldf_field **fields, const char *name, const char *value);
+void ldf_update_field(struct ldf_field **, const char *, const char *);
 int ldf_remove_field(struct ldf_field **fields, const char *name);
 void ldf_free_fields(struct ldf_field *fields);
 

@@ -76,6 +76,18 @@ static inline void _ldf_free_field(struct ldf_field *field) {
   free(field);
 }
 
+static struct ldf_field *_ldf_find(struct ldf_field *fields, const char *name) {
+
+  struct ldf_field *cur_field;
+
+  for ( cur_field = fields; cur_field != NULL; cur_field = cur_field->next ) {
+    if ( !strcmp(cur_field->name, name) )
+      return cur_field;
+  }
+  return NULL;
+
+}
+
 static int _ldf_http_get(const char *hostname, const char *port, const char *page) {
 
   /* Some parts from http://beej.us/guide/bgnet/output/html/singlepage/bgnet.html */
@@ -231,6 +243,21 @@ void ldf_add_field(struct ldf_field **fields, const char *name, const char *valu
   new_field->value = _ldf_trim_encode(value);
   new_field->next = *fields;
   *fields = new_field;
+
+}
+
+void ldf_update_field(struct ldf_field **fields, const char *name, const char *value) {
+
+  struct ldf_field *cur_field;
+
+  cur_field = _ldf_find(*fields, name);
+  if ( cur_field != NULL ) {
+    free(cur_field->value);
+    cur_field->value = _ldf_trim_encode(value);
+  }
+  else {
+    ldf_add_field(fields, name, value);
+  }
 
 }
 

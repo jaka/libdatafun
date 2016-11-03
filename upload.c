@@ -24,6 +24,9 @@ int main(int argc, char **argv) {
   ldf_add_field(&fields, "indoor_temp", "27.65");
   ldf_add_field(&fields, "outdoor_temp", "33.53");
 
+  /* Update second field. */
+  ldf_update_field(&fields, "outdoor_temp", "31.52");
+
   /* Send data to server. */
   ldf_create_request(&request, publicKey, privateKey, fields);
   printf("Sending request %s.\n", request);
