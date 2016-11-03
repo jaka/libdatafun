@@ -23,6 +23,7 @@ static char *_ldf_trim_encode(const char* i_str) {
     r_ptr++;
   }
   first_ptr = r_ptr;
+  last_ptr = r_ptr;
 
   i = 0;
   j = 0;
