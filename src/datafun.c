@@ -152,7 +152,6 @@ static int _ldf_http_get(const char *hostname, const char *port, const char *pag
 
   /* Find end of HTTP headers: BREAKINGSTRING */
   i_breakingstring = 0;
-  i = 0;
   while ( (r_bytes = recv(sockfd, buffer, buflen, 0)) > 0 ) {
     for ( i = 0; i < r_bytes; i++ ) {
       if ( buffer[i] == breakingstring[i_breakingstring] ) {
@@ -161,8 +160,12 @@ static int _ldf_http_get(const char *hostname, const char *port, const char *pag
           /* BREAKINGSTRING was found completely. */
           break;
         }
-      } else {
-        i_breakingstring = 0;
+      }
+      else {
+        if ( buffer[i] == breakingstring[0] )
+          i_breakingstring = 1;
+        else
+          i_breakingstring = 0;
       }
     }
     if ( i_breakingstring == LDF_BREAKINGSTRING_LENGTH ) {
